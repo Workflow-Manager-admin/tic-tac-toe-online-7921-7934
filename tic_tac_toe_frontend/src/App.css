@@ -1,104 +1,216 @@
-/* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --ttt-primary: #1976d2;
+  --ttt-secondary: #424242;
+  --ttt-accent: #ff9800;
+  --ttt-bg: #fff;
+  --ttt-lightgray: #f4f4f4;
+  --ttt-shadow: rgba(33,33,33,0.11);
+  --ttt-border: #e2e2e2;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
-}
-
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+.main-bg {
+  background: var(--ttt-bg);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.game-root {
+  max-width: 410px;
+  margin: 0 auto;
+  padding: 0 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
+  min-height: 98vh;
+  box-sizing: border-box;
   position: relative;
+  z-index: 10;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.header {
+  text-align: center;
+  padding: 25px 0 13px 0;
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 3px 18px var(--ttt-shadow);
+  margin-bottom: 6px;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
+.sidebar-toggle {
+  font-size: 1rem;
+  margin-left: 4px;
+  padding: 3px 13px;
+  border-radius: 7px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.17s;
+}
+.sidebar-toggle:hover {
+  color: #fff;
+  background: var(--ttt-accent);
+  border-color: var(--ttt-accent);
+}
+.sidebar {
+  position: fixed;
+  top:0;
+  right: -260px;
+  width: 240px;
+  height: 100vh;
+  z-index: 90;
+  background: #fff;
+  border-left: 1.5px solid var(--ttt-border);
+  transition: right 0.22s cubic-bezier(.5, -.15, .41, .98);
+  box-shadow: none;
+  padding: 7px 14px 28px 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.input-label {
+  display: flex;
+  flex-direction: column;
+  color: var(--ttt-secondary);
+  font-size: 15px;
+  font-weight: 400;
+  margin-top: 7px;
+}
+.input-label select {
+  margin-top: 4px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1.5px solid var(--ttt-border);
+  padding: 4.5px 7px;
+  color: var(--ttt-secondary);
+  background: var(--ttt-lightgray);
+  min-width: 90px;
+  font-weight: 600;
+}
+
+.score-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  gap: 1.1em;
+  align-items: center;
   border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
+  margin-bottom: 14px;
+  padding: 10px 0;
+  font-size: 1.12rem;
+  font-family: inherit;
+  letter-spacing: 0;
+  color: var(--ttt-secondary);
+}
+.game-area {
+  width: 100%;
+  margin: 0 auto;
+}
+.ttt-board-container {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 68px);
+  grid-template-rows: repeat(3, 68px);
+  gap: 6px;
+  background: var(--ttt-border);
+  border-radius: 14px;
+  box-shadow: 0 3px 23px var(--ttt-shadow);
+  padding: 10px 8px 8px 10px;
+}
+.ttt-cell {
+  width: 68px;
+  height: 68px;
+  font-size: 2.2rem;
+  background: var(--ttt-bg);
+  border: 2.3px solid var(--ttt-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.2s, color 0.2s;
+  color: var(--ttt-primary);
+  border-radius: 8px;
+  box-shadow: 0 1.8px 7px var(--ttt-shadow);
+  outline: none;
+  font-weight: 600;
+  user-select: none;
+}
+.ttt-cell:disabled {
+  cursor: not-allowed;
+  background: var(--ttt-lightgray);
+  opacity: 0.92;
+}
+.ttt-cell:active:not(:disabled) {
+  box-shadow: 0 4px 12px var(--ttt-accent);
+  border-color: var(--ttt-accent);
+}
+
+.status-area {
+  min-height: 1.6em;
+  font-size: 1.19em;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  color: var(--ttt-accent);
+  font-family: inherit;
+}
+
+.btn-accent, .btn-outline {
+  padding: 6.5px 24px;
+  font-size: 1rem;
+  margin: 7px 3.8px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--ttt-accent);
+  background: var(--ttt-accent);
+  color: #fff;
+  transition: background 0.2s, color 0.14s, border 0.16s;
+}
+.btn-accent:hover, .btn-accent:focus {
+  background: #fff3e0;
+  color: var(--ttt-accent);
+  border-color: var(--ttt-accent);
+}
+.btn-outline {
+  background: #fff;
+  color: var(--ttt-accent);
+  border-color: var(--ttt-accent);
+}
+.btn-outline:hover, .btn-outline:focus {
+  background: var(--ttt-accent);
+  color:#fff;
+}
+.footer {
+  width: 100%;
+  text-align: center;
+  background: none;
+  padding: 15px 0;
+  margin: 0;
+  border-top: 1.5px solid var(--ttt-border);
+  font-family: inherit;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
-}
-
-.theme-toggle:active {
-  transform: translateY(0);
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 600px) {
+  .game-root {
+    max-width: 99vw;
+    padding: 0 2vw;
   }
-  to {
-    transform: rotate(360deg);
+  .ttt-board {
+    grid-template-columns: repeat(3, 22vw);
+    grid-template-rows: repeat(3, 22vw);
+    padding: 2vw 1vw 1vw 2vw;
   }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .ttt-cell {
+    width: 22vw;
+    height: 22vw;
+    font-size: 2.1em;
+  }
+  .sidebar {
+    width: 94vw;
+    right: -100vw;
+    top: 0; 
+    z-index: 99;
   }
 }
